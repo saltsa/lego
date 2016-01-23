@@ -45,7 +45,7 @@ func (d *DNSProviderDigitalOcean) CreateTXTRecord(fqdn, value string, ttl int) e
 		} `json:"domain_record"`
 	}
 
-	reqURL := fmt.Sprintf("https://api.digitalocean.com/v2/domains/%s/records", fqdn)
+	reqURL := fmt.Sprintf("%s/v2/domains/%s/records", digitalOceanBaseURL, fqdn)
 	reqData := txtRecordRequest{RecordType: "TXT", Name: "@", Data: value}
 	body, err := json.Marshal(reqData)
 	if err != nil {
@@ -95,7 +95,7 @@ func (d *DNSProviderDigitalOcean) RemoveTXTRecord(fqdn, value string, ttl int) e
 		return fmt.Errorf("unknown record ID for '%s'", fqdn)
 	}
 
-	reqURL := fmt.Sprintf("https://api.digitalocean.com/v2/domains/%s/records/%d", fqdn, recordID)
+	reqURL := fmt.Sprintf("%s/v2/domains/%s/records/%d", digitalOceanBaseURL, fqdn, recordID)
 	req, err := http.NewRequest("DELETE", reqURL, nil)
 	if err != nil {
 		return err
@@ -128,3 +128,5 @@ type digitalOceanAPIError struct {
 	ID      string `json:"id"`
 	Message string `json:"message"`
 }
+
+var digitalOceanBaseURL = "https://api.digitalocean.com"
