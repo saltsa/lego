@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"crypto"
 	"crypto/ecdsa"
-	"crypto/elliptic"
+//	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
@@ -216,8 +216,8 @@ func parsePEMPrivateKey(key []byte) (crypto.PrivateKey, error) {
 
 func generatePrivateKey(t keyType, keyLength int) (crypto.PrivateKey, error) {
 	switch t {
-	case eckey:
-		return ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
+//	case eckey:
+//		return ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
 	case rsakey:
 		return rsa.GenerateKey(rand.Reader, keyLength)
 	}
